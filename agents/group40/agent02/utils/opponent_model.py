@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Dict
 
 from geniusweb.issuevalue.Bid import Bid
 from geniusweb.issuevalue.DiscreteValueSet import DiscreteValueSet
@@ -55,7 +56,22 @@ class OpponentModel:
         )
 
         return predicted_utility
+    
+    def get_issue_weights(self) -> Dict[Value, float]: 
+        weights_dict = {}
+        for issue_id, issue_estimator in self.issue_estimators.items():
+            weights_dict[issue_id] = issue_estimator.weight
 
+        return weights_dict
+
+    def get_issue_value_utilities(self, issue_id: str) -> Dict[Value, float]:
+        if issue_id not in self.issue_estimators:
+            raise ValueError(f"Issue ID '{issue_id}' not found in opponent model.")
+
+        issue_estimator = self.issue_estimators[issue_id]
+        possible_values = issue_estimator.value_trackers.keys()
+        # Returns a dictionary with estimated utilities for each value
+        return {value: issue_estimator.get_value_utility(value) for value in possible_values}
 
 class IssueEstimator:
     def __init__(self, value_set: DiscreteValueSet):
@@ -103,6 +119,7 @@ class IssueEstimator:
         return 0
 
 
+# this class tracks how often a specific value has been offered and tracks its utility
 class ValueEstimator:
     def __init__(self):
         self.count = 0

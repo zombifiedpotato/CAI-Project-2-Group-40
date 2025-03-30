@@ -172,6 +172,17 @@ class Group40Agent02(DefaultParty):
             # set bid as last received
             self.last_received_bid = bid
 
+            print("\n🔹 Opponent Estimated Issue Preferences 🔹")
+            for issue in self.domain.getIssues():
+                try:
+                    issue_utilities = self.opponent_model.get_issue_value_utilities(issue)
+                    print(f"Issue: {issue}")
+                    for value, weight in issue_utilities.items():
+                        print(f"  - Value: {value}, Estimated Utility: {weight:.3f}")
+                except ValueError:
+                    print(f"⚠️ Warning: Issue '{issue}' not found in opponent model.")
+            print("──────────────────────────────────────────\n")
+
     def my_turn(self):
         """This method is called when it is our turn. It should decide upon an action
         to perform and send this action to the opponent.
