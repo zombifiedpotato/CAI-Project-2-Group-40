@@ -293,7 +293,7 @@ class Group40Agent03(DefaultParty):
         if opponent_bid_util >= our_next_util * Decimal(alpha): # 2% more than what we want increase
             return True
         
-        if progress <= 1 - self.max_time_for_turn:
+        if progress + self.max_time_for_turn > 1:
             return True
         
         return False
