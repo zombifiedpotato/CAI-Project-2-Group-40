@@ -31,7 +31,7 @@ from tudelft_utilities_logging.ReportToLogger import ReportToLogger
 from .utils.opponent_model import OpponentModel
 
 
-class TemplateAgent(DefaultParty):
+class Group40Agent01(DefaultParty):
     """
     Template of a Python geniusweb agent.
     """
@@ -142,7 +142,7 @@ class TemplateAgent(DefaultParty):
         Returns:
             str: Agent description
         """
-        return "Template agent for the ANL 2022 competition"
+        return "Agent01 of group 40."
 
     def opponent_action(self, action):
         """Process an action that was received from the opponent.
@@ -224,17 +224,17 @@ class TemplateAgent(DefaultParty):
         progress = self.progress.get(time() * 1000)
 
         # here 'next' refers to the bid that we will put out next
-        next_bid = self.find_bid()
-        next_util = self.profile.getUtility(next_bid)
-        curr_util = self.profile.getUtility(bid)
+        our_next_bid = self.find_bid()
+        our_next_util = self.profile.getUtility(our_next_bid)
+        opponent_bid_util = self.profile.getUtility(bid)
 
         # PHASE 1, before 30% of the negotiation is done
         if progress < 0.3:
-            return next_util >= curr_util * Decimal(1.02)
+            return opponent_bid_util >= our_next_util * Decimal(1.02) # 2% more than what we want increase
 
         # PHASE 2, 30%-60% of the negotiation is done
         if progress < 0.6:
-            return next_util >= curr_util
+            return opponent_bid_util >= our_next_util
 
         # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
         if progress < 0.99:
@@ -244,7 +244,7 @@ class TemplateAgent(DefaultParty):
 
             # calculate the utility threshold
             util_threshold = self._calc_max_w(w_start)
-            return next_util >= curr_util or curr_util >= util_threshold
+            return opponent_bid_util >= our_next_util or opponent_bid_util >= util_threshold
 
         # PHASE 4, after 99% of the negotiation is done, always accept the (final) offer
         return True
