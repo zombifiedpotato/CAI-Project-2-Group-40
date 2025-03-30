@@ -17,14 +17,18 @@ if not RESULTS_DIR.exists():
 #   You need to specify a time deadline (is milliseconds (ms)) we are allowed to negotiate before we end without agreement
 settings = {
     "agents": [
-        {
-            "class": "agents.group40.agent02.group40agent02.Group40Agent02",
-            "parameters": {"storage_dir": "agent_storage/Group40/Agent02"},
-        },
+        #{
+        #    "class": "agents.group40.agent02.group40agent02.Group40Agent02",
+        #    "parameters": {"storage_dir": "agent_storage/Group40/Agent02"},
+        #},
         # {
         #     "class": "agents.group40.agent01.group40agent01.Group40Agent01",
         #     "parameters": {"storage_dir": "agent_storage/Group40/Agent01"},
         # },
+        {
+            "class": "agents.group40.agent03.group40agent03.Group40Agent03",
+            "parameters": {"storage_dir": "agent_storage/Group40/Agent03"},
+        },
         {
             "class": "agents.template_agent.template_agent.TemplateAgent",
             "parameters": {"storage_dir": "agent_storage/TemplateAgent"},
