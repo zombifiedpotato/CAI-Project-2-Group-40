@@ -1,8 +1,7 @@
 import logging
-from decimal import Decimal
 from random import randint
 from time import time
-from typing import cast, Dict
+from typing import cast
 
 from geniusweb.actions.Accept import Accept
 from geniusweb.actions.Action import Action
@@ -52,10 +51,6 @@ class TemplateAgent(DefaultParty):
         self.last_received_bid: Bid = None
         self.opponent_model: OpponentModel = None
         self.logger.log(logging.INFO, "party is initialized")
-
-        # OUR PARAMETERS
-        # time_to_bid: map of time (in range [0,1]) to the opponent bid that was offered at that time
-        self.time_to_bid: Dict[float, Bid] = {}
 
     def notifyChange(self, data: Inform):
         """MUST BE IMPLEMENTED
@@ -157,10 +152,6 @@ class TemplateAgent(DefaultParty):
                 self.opponent_model = OpponentModel(self.domain)
 
             bid = cast(Offer, action).getBid()
-            progress = self.progress.get(time() * 1000)
-
-            # add the opponent's bid to our time_to_bid dictionary
-            self.time_to_bid[progress] = bid
 
             # update opponent model with bid
             self.opponent_model.update(bid)
@@ -196,58 +187,20 @@ class TemplateAgent(DefaultParty):
     ################################## Example methods below ##################################
     ###########################################################################################
 
-    # calculate the maximum utility of the recorded opponent bids
-    # where the bid was offered after start
-    def _calc_max_w(self, start) -> Decimal:
-        curr_max = Decimal(0.0)
-        for t, bid in self.time_to_bid.items():
-            if t >= start:
-                curr_max = max(curr_max, self.profile.getUtility(bid))
-        return curr_max
-
-    # calculate the average utility of the recorded opponent bids
-    # where the bid was offered after start
-    def _calc_avg_w(self, start) -> Decimal:
-        curr_sum = Decimal(0.0)
-        n = 0
-        for t, bid in self.time_to_bid.items():
-            if t >= start:
-                curr_sum += self.profile.getUtility(bid)
-                n += 1
-        return curr_sum / Decimal(n) if n else Decimal(0.0)
-
     def accept_condition(self, bid: Bid) -> bool:
         if bid is None:
             return False
 
-        from time import time
+        # progress of the negotiation session between 0 and 1 (1 is deadline)
         progress = self.progress.get(time() * 1000)
 
-        # here 'next' refers to the bid that we will put out next
-        next_bid = self.find_bid()
-        next_util = self.profile.getUtility(next_bid)
-        curr_util = self.profile.getUtility(bid)
-
-        # PHASE 1, before 30% of the negotiation is done
-        if progress < 0.3:
-            return next_util >= curr_util * Decimal(1.02)
-
-        # PHASE 2, 30%-60% of the negotiation is done
-        if progress < 0.6:
-            return next_util >= curr_util
-
-        # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
-        if progress < 0.99:
-            # calculate the starting time (in range [0,1]) of the window of bids
-            r = Decimal(1.0) - Decimal(progress)
-            w_start = Decimal(progress) - r
-
-            # calculate the utility threshold
-            util_threshold = self._calc_max_w(w_start)
-            return next_util >= curr_util or curr_util >= util_threshold
-
-        # PHASE 4, after 99% of the negotiation is done, always accept the (final) offer
-        return True
+        # very basic approach that accepts if the offer is valued above 0.7 and
+        # 95% of the time towards the deadline has passed
+        conditions = [
+            self.profile.getUtility(bid) > 0.8,
+            progress > 0.95,
+        ]
+        return all(conditions)
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
