@@ -1,4 +1,5 @@
 import logging
+import random
 from decimal import Decimal
 from random import randint
 from time import time
@@ -87,6 +88,7 @@ class Group40Agent02(DefaultParty):
             self.logger.log(logging.INFO, "Utilities: " + toStr(self.profile.getUtilities()))
             self.logger.log(logging.INFO, "Weights: " + toStr(self.profile.getWeights()))
             self.domain = self.profile.getDomain()
+            self.opponent_model = OpponentModel(self.domain)
             profile_connection.close()
 
 
@@ -172,16 +174,16 @@ class Group40Agent02(DefaultParty):
             # set bid as last received
             self.last_received_bid = bid
 
-            print("\n🔹 Opponent Estimated Issue Preferences 🔹")
-            for issue in self.domain.getIssues():
-                try:
-                    issue_utilities = self.opponent_model.get_issue_value_utilities(issue)
-                    print(f"Issue: {issue}")
-                    for value, weight in issue_utilities.items():
-                        print(f"  - Value: {value}, Estimated Utility: {weight:.3f}")
-                except ValueError:
-                    print(f"⚠️ Warning: Issue '{issue}' not found in opponent model.")
-            print("──────────────────────────────────────────\n")
+            # print("\n🔹 Opponent Estimated Issue Preferences 🔹")
+            # for issue in self.domain.getIssues():
+            #     try:
+            #         issue_utilities = self.opponent_model.get_issue_value_utilities(issue)
+            #         print(f"Issue: {issue}")
+            #         for value, weight in issue_utilities.items():
+            #             print(f"  - Value: {value}, Estimated Utility: {weight:.3f}")
+            #     except ValueError:
+            #         print(f"⚠️ Warning: Issue '{issue}' not found in opponent model.")
+            # print("──────────────────────────────────────────\n")
 
     def my_turn(self):
         """This method is called when it is our turn. It should decide upon an action
@@ -265,29 +267,53 @@ class Group40Agent02(DefaultParty):
         # compose a list of all possible bids
         domain = self.domain
         progress = self.progress.get(time() * 1000)
-        eps = 0.2
-        time_pressure = Decimal(str(2.0 - progress ** (1 / eps)))
 
+        # self.logger.log(logging.INFO, "Time Pressure: " + str(time_pressure))
+        our_utility = 1
         our_weights = self.profile.getWeights()
         our_utilities = self.profile.getUtilities()
 
-        opponent_weights = self.profile.getWeights() # TODO Use opponent model
-        opponent_utilities = self.profile.getUtilities() # TODO Use opponent model
-
+        opponent_utility = 1
+        opponent_weights = self.opponent_model.get_issue_weights()
+        self.logger.log(logging.INFO, "Our Weights: " + str(our_weights) + ", Opponent Weights: " + str(opponent_weights))
         all_values = dict()
-        for issue in domain.getIssues():
+        issues = list(domain.getIssues())
+        random.shuffle(issues)
+        for issue in issues:
             curr_values = dict()
+
 
             our_weight = our_weights.get(issue)
             our_preference = our_utilities.get(issue)
+            our_total = 0
 
             opponent_weight = opponent_weights.get(issue)
-            opponent_preference = opponent_utilities.get(issue)
+            opponent_preference = self.opponent_model.get_issue_value_utilities(issue)
+            opponent_total = 0
             for value in domain.getValues(issue):
-                curr_values[value] = (time_pressure * our_weight * our_preference.getUtility(value)) + (opponent_weight * opponent_preference.getUtility(value))
+                opponent_total += opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
+                our_total += our_preference.getUtility(value)
+
+            if our_total == 0:
+                our_total = 1
+
+            if opponent_total == 0:
+                opponent_total = 1
+
+            for value in domain.getValues(issue):
+                opponent_value = opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
+                opponent_normalized = opponent_value / opponent_total
+                our_value = our_preference.getUtility(value)
+                our_normalized = our_value / our_total
+                self.logger.log(logging.INFO, "Our Normal: " + str(our_normalized) + ", Opponent Normal: " + str(opponent_normalized))
+                self.logger.log(logging.INFO, "Our Value: " + str(our_value) + ", Opponent Value: " + str(opponent_value))
+                curr_values[value] = (our_normalized) + Decimal(str(opponent_normalized))
 
             all_values[issue] = max(curr_values, key=curr_values.get)
 
+            our_utility = self.profile.getUtility(Bid(all_values))
+            opponent_utility = self.opponent_model.get_predicted_utility(Bid(all_values))
+            self.logger.log(logging.INFO, "Our Utility: " + str(our_utility) + ", Opponent Utility: " + str(opponent_utility))
 
         return Bid(all_values)
 
