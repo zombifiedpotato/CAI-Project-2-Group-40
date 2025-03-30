@@ -57,6 +57,13 @@ class Group40Agent02(DefaultParty):
         # time_to_bid: map of time (in range [0,1]) to the opponent bid that was offered at that time
         self.time_to_bid: Dict[float, Bid] = {}
 
+        # last_my_turn_time: the progress value (in range [0, 1]) of when it was our turn last
+        self.last_my_turn_time = None
+
+        # max_time_for_turn: we keep the maximum time it takes for it to be our turn again so that we estimate
+        # when it will be our last turn
+        self.max_time_for_turn = 0.0
+
     def notifyChange(self, data: Inform):
         """MUST BE IMPLEMENTED
         This is the entry point of all interaction with your agent after is has been initialised.
@@ -182,6 +189,18 @@ class Group40Agent02(DefaultParty):
 
         # send the action
         self.send_action(action)
+
+        # update last_my_turn_time and max_time_for_turn
+        progress = self.progress.get(time() * 1000)
+
+        # if last_my_turn_time is None, we do not update max_time_for_turn, and only initialize last_my_turn_time
+        if self.last_my_turn_time is None:
+            self.last_my_turn_time = progress
+            return
+
+        self.max_time_for_turn = max(self.max_time_for_turn, progress - self.last_my_turn_time)
+        self.last_my_turn_time = progress
+
 
     def save_data(self):
         """This method is called after the negotiation is finished. It can be used to store data
