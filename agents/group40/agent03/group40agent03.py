@@ -293,28 +293,11 @@ class Group40Agent03(DefaultParty):
         if opponent_bid_util >= our_next_util * Decimal(alpha): # 2% more than what we want increase
             return True
         
-        if progress >= 0.99:
+        if progress <= 1 - self.max_time_for_turn:
             return True
         
         return False
-            
-
-        # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
-        if progress < 1 - self.max_time_for_turn:
-            # calculate the starting time (in range [0,1]) of the window of bids
-            r = Decimal(1.0) - Decimal(progress)
-            w_start = Decimal(progress) - r
-
-            # calculate the utility threshold
-            util_threshold = self._calc_max_w(w_start)
-            return opponent_bid_util >= our_next_util or opponent_bid_util >= util_threshold
-
-        # PHASE 4, after 95% of the negotiation is done, always accept the (final) offer
-        # Note (Sinan): should we not always accept in phase 4 since any bid with util > our reservation value
-        # is better than not accepting an offer at all? Also, it is specified in the literature that constant values
-        # are domain dependent and almost never are optimal
-        return opponent_bid_util > 0.8
-
+    
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
         domain = self.profile.getDomain()
