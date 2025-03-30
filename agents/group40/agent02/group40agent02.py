@@ -226,7 +226,12 @@ class Group40Agent02(DefaultParty):
         # here 'next' refers to the bid that we will put out next
         our_next_bid = self.find_bid()
         our_next_util = self.profile.getUtility(our_next_bid)
+        our_reservation_util = self.profile.getUtility(self.profile.getReservationBid()) if self.profile.getReservationBid() is not None else 0
         opponent_bid_util = self.profile.getUtility(bid)
+
+        if our_reservation_util > opponent_bid_util:
+            return False
+
 
         # PHASE 1, before 30% of the negotiation is done
         if progress < 0.3:
@@ -237,7 +242,7 @@ class Group40Agent02(DefaultParty):
             return opponent_bid_util >= our_next_util
 
         # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
-        if progress < 0.99:
+        if progress < 0.95:
             # calculate the starting time (in range [0,1]) of the window of bids
             r = Decimal(1.0) - Decimal(progress)
             w_start = Decimal(progress) - r
@@ -246,8 +251,8 @@ class Group40Agent02(DefaultParty):
             util_threshold = self._calc_max_w(w_start)
             return opponent_bid_util >= our_next_util or opponent_bid_util >= util_threshold
 
-        # PHASE 4, after 99% of the negotiation is done, always accept the (final) offer
-        return True
+        # PHASE 4, after 95% of the negotiation is done, always accept the (final) offer
+        return opponent_bid_util > 0.8
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
