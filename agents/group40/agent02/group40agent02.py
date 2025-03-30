@@ -26,9 +26,10 @@ from geniusweb.profileconnection.ProfileConnectionFactory import (
 )
 from geniusweb.progress.ProgressTime import ProgressTime
 from geniusweb.references.Parameters import Parameters
+from geniusweb.utils import toStr
 from tudelft_utilities_logging.ReportToLogger import ReportToLogger
 
-from .utils.opponent_model import OpponentModel
+from .utils.opponent_model import OpponentModel, IssueEstimator
 
 
 class Group40Agent02(DefaultParty):
@@ -83,8 +84,11 @@ class Group40Agent02(DefaultParty):
                 data.getProfile().getURI(), self.getReporter()
             )
             self.profile = profile_connection.getProfile()
+            self.logger.log(logging.INFO, "Utilities: " + toStr(self.profile.getUtilities()))
+            self.logger.log(logging.INFO, "Weights: " + toStr(self.profile.getWeights()))
             self.domain = self.profile.getDomain()
             profile_connection.close()
+
 
         # ActionDone informs you of an action (an offer or an accept)
         # that is performed by one of the agents (including yourself).
@@ -159,6 +163,7 @@ class Group40Agent02(DefaultParty):
             bid = cast(Offer, action).getBid()
             progress = self.progress.get(time() * 1000)
 
+
             # add the opponent's bid to our time_to_bid dictionary
             self.time_to_bid[progress] = bid
 
@@ -191,10 +196,6 @@ class Group40Agent02(DefaultParty):
         data = "Data for learning (see README.md)"
         with open(f"{self.storage_dir}/data.md", "w") as f:
             f.write(data)
-
-    ###########################################################################################
-    ################################## Example methods below ##################################
-    ###########################################################################################
 
     # calculate the maximum utility of the recorded opponent bids
     # where the bid was offered after start
@@ -251,20 +252,33 @@ class Group40Agent02(DefaultParty):
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
-        domain = self.profile.getDomain()
-        all_bids = AllBidsList(domain)
+        domain = self.domain
+        progress = self.progress.get(time() * 1000)
+        eps = 0.2
+        time_pressure = Decimal(str(2.0 - progress ** (1 / eps)))
 
-        best_bid_score = 0.0
-        best_bid = None
+        our_weights = self.profile.getWeights()
+        our_utilities = self.profile.getUtilities()
 
-        # take 500 attempts to find a bid according to a heuristic score
-        for _ in range(500):
-            bid = all_bids.get(randint(0, all_bids.size() - 1))
-            bid_score = self.score_bid(bid)
-            if bid_score > best_bid_score:
-                best_bid_score, best_bid = bid_score, bid
+        opponent_weights = self.profile.getWeights() # TODO Use opponent model
+        opponent_utilities = self.profile.getUtilities() # TODO Use opponent model
 
-        return best_bid
+        all_values = dict()
+        for issue in domain.getIssues():
+            curr_values = dict()
+
+            our_weight = our_weights.get(issue)
+            our_preference = our_utilities.get(issue)
+
+            opponent_weight = opponent_weights.get(issue)
+            opponent_preference = opponent_utilities.get(issue)
+            for value in domain.getValues(issue):
+                curr_values[value] = (time_pressure * our_weight * our_preference.getUtility(value)) + (opponent_weight * opponent_preference.getUtility(value))
+
+            all_values[issue] = max(curr_values, key=curr_values.get)
+
+
+        return Bid(all_values)
 
     def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
         """Calculate heuristic score for a bid
