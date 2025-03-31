@@ -21,6 +21,10 @@ settings = {
             "class": "agents.group40.agent05.group40agent05.Group40Agent05",
             "parameters": {"storage_dir": "agent_storage/Group40/Agent05"},
         },
+        {
+            "class": "agents.group40.agent04.group40agent04.Group40Agent04",
+            "parameters": {"storage_dir": "agent_storage/Group40/Agent04"},
+        },
         # {
         #     "class": "agents.group40.agent05.group40agent05.Group40Agent05",
         #     "parameters": {"storage_dir": "agent_storage/Group40/Agent052"},
@@ -33,17 +37,21 @@ settings = {
         #     "class": "agents.template_agent.template_agent.TemplateAgent",
         #     "parameters": {"storage_dir": "agent_storage/TemplateAgent"},
         # },
-        {
-            "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
-            "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
-        },
         # {
         #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
         #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         # },
+        # {
+        #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
+        #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
+        # },
+        # {
+        #     "class": "agents.boulware_agent.boulware_agent.BoulwareAgent",
+        #     "parameters": {"storage_dir": "agent_storage/BoulwareAgent"},
+        # },
     ],
     #"profiles": ["domains/domain00/profileA.json", "domains/domain00/profileB.json"],
-    "profiles": ["domains/domain02/profileA.json", "domains/domain02/profileB.json"],
+    "profiles": ["domains/domain01/profileA.json", "domains/domain01/profileB.json"],
     "deadline_time_ms": 10000,
 }
 

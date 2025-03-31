@@ -252,6 +252,13 @@ class Group40Agent05(DefaultParty):
         return curr_sum / Decimal(n) if n else Decimal(0.0)
 
     def accept_condition(self, bid: Bid) -> bool:
+        
+        # Skip the first round because bid is None
+        if bid is None:
+            return False
+        
+        if (self.profile.getUtility(bid) < self.opponent_model.get_predicted_utility(bid)):
+            return False
     
         # Statistical parameters used
         min_val = 0.7
@@ -260,9 +267,6 @@ class Group40Agent05(DefaultParty):
         alpha = 1.02
         beta = 0.0
         rvalue_threshold = 0.1
-
-        if bid is None:
-            return False
 
         from time import time
         progress = self.progress.get(time() * 1000)
