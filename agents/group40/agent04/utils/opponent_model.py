@@ -56,8 +56,8 @@ class OpponentModel:
         )
 
         return predicted_utility
-    
-    def get_issue_weights(self) -> Dict[Value, float]: 
+
+    def get_issue_weights(self) -> Dict[Value, float]:
         weights_dict = {}
         for issue_id, issue_estimator in self.issue_estimators.items():
             weights_dict[issue_id] = issue_estimator.weight
