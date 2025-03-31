@@ -60,6 +60,13 @@ class Group40Agent03(DefaultParty):
         self.time_to_bid: Dict[float, Bid] = {}
         self.all_bids_utility: Dict[Bid, float] = dict()
 
+        # last_my_turn_time: the progress value (in range [0, 1]) of when it was our turn last
+        self.last_my_turn_time = None
+
+        # max_time_for_turn: we keep the maximum time it takes for it to be our turn again so that we estimate
+        # when it will be our last turn
+        self.max_time_for_turn = 0.0
+
     def notifyChange(self, data: Inform):
         """MUST BE IMPLEMENTED
         This is the entry point of all interaction with your agent after is has been initialised.
@@ -154,7 +161,7 @@ class Group40Agent03(DefaultParty):
         Returns:
             str: Agent description
         """
-        return "Agent01 of group 40."
+        return "Agent03 of group 40."
 
     def opponent_action(self, action):
         """Process an action that was received from the opponent.
@@ -207,6 +214,18 @@ class Group40Agent03(DefaultParty):
         # send the action
         self.send_action(action)
 
+        # update last_my_turn_time and max_time_for_turn
+        progress = self.progress.get(time() * 1000)
+
+        # if last_my_turn_time is None, we do not update max_time_for_turn, and only initialize last_my_turn_time
+        if self.last_my_turn_time is None:
+            self.last_my_turn_time = progress
+            return
+
+        self.max_time_for_turn = max(self.max_time_for_turn, progress - self.last_my_turn_time)
+        self.last_my_turn_time = progress
+
+
     def save_data(self):
         """This method is called after the negotiation is finished. It can be used to store data
         for learning capabilities. Note that no extensive calculations can be done within this method.
@@ -225,6 +244,15 @@ class Group40Agent03(DefaultParty):
                 curr_max = max(curr_max, self.profile.getUtility(bid))
         return curr_max
 
+    # Calculate the minimum utility of the recorded opponent bids
+    # where the bid was offered after start
+    def _calc_min_w(self, start) -> Decimal:
+        curr_min = Decimal(1.0)
+        for t, bid in self.time_to_bid.items():
+            if t >= start:
+                curr_min = min(curr_min, self.profile.getUtility(bid))
+        return curr_min
+
     # calculate the average utility of the recorded opponent bids
     # where the bid was offered after start
     def _calc_avg_w(self, start) -> Decimal:
@@ -237,6 +265,14 @@ class Group40Agent03(DefaultParty):
         return curr_sum / Decimal(n) if n else Decimal(0.0)
 
     def accept_condition(self, bid: Bid) -> bool:
+        # Statistical parameters used
+        min_val = 0.7
+        max_val = 1.0
+        epsilon = 0.2  # as specified in the article
+        alpha = 1.02
+        beta = 0.0
+        rvalue_threshold = 0.1
+
         if bid is None:
             return False
 
@@ -246,28 +282,40 @@ class Group40Agent03(DefaultParty):
         # here 'next' refers to the bid that we will put out next
         our_next_bid = self.find_bid()
         our_next_util = self.profile.getUtility(our_next_bid)
+        our_reservation_util = self.profile.getUtility(self.profile.getReservationBid()) if self.profile.getReservationBid() is not None else 0
         opponent_bid_util = self.profile.getUtility(bid)
 
-        # PHASE 1, before 30% of the negotiation is done
-        if progress < 0.3:
-            return opponent_bid_util >= our_next_util * Decimal(1.02) # 2% more than what we want increase
+        if our_reservation_util > opponent_bid_util:
+            return False
+        # calculate the starting time (in range [0,1]) of the window of bids
+        r = Decimal(1.0) - Decimal(progress)
+        start = Decimal(progress) - r
 
-        # PHASE 2, 30%-60% of the negotiation is done
-        if progress < 0.6:
-            return opponent_bid_util >= our_next_util
+        # calulate the lowest utility offered in previous bids
+        min_opponent_bid_util = self._calc_min_w(start)
 
-        # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
-        if progress < 0.99:
-            # calculate the starting time (in range [0,1]) of the window of bids
-            r = Decimal(1.0) - Decimal(progress)
-            w_start = Decimal(progress) - r
+        # First Equation: Acceptance probability
+        p_accept = 1.0 if opponent_bid_util >= min_opponent_bid_util else 1 - (min_opponent_bid_util - opponent_bid_util)
 
-            # calculate the utility threshold
-            util_threshold = self._calc_max_w(w_start)
-            return opponent_bid_util >= our_next_util or opponent_bid_util >= util_threshold
+        # Generate random rValue
+        r_value = random.uniform(0, 1)
 
-        # PHASE 4, after 99% of the negotiation is done, always accept the (final) offer
-        return True
+        # Time-based delta adjustment
+        delta = min_val + (max_val - min_val) * ((1.0 - progress)**epsilon)
+        r_value += delta
+
+        # Statistical condition
+        if (p_accept - r_value) >= rvalue_threshold:
+            return True
+
+        # AC_Next(1.02) condition
+        if opponent_bid_util >= our_next_util * Decimal(alpha): # 2% more than what we want increase
+            return True
+
+        if progress + self.max_time_for_turn > 1:
+            return True
+
+        return False
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
