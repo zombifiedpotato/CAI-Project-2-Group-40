@@ -58,6 +58,7 @@ class Group40Agent04(DefaultParty):
         # OUR PARAMETERS
         # time_to_bid: map of time (in range [0,1]) to the opponent bid that was offered at that time
         self.time_to_bid: Dict[float, Bid] = {}
+        self.all_bids_utility: Dict[Bid, float] = dict()
 
     def notifyChange(self, data: Inform):
         """MUST BE IMPLEMENTED
@@ -85,10 +86,15 @@ class Group40Agent04(DefaultParty):
                 data.getProfile().getURI(), self.getReporter()
             )
             self.profile = profile_connection.getProfile()
-            self.logger.log(logging.INFO, "Utilities: " + toStr(self.profile.getUtilities()))
-            self.logger.log(logging.INFO, "Weights: " + toStr(self.profile.getWeights()))
             self.domain = self.profile.getDomain()
             self.opponent_model = OpponentModel(self.domain)
+            all_bids_list = AllBidsList(self.domain)
+            print(all_bids_list.size())
+            for i in range(0, all_bids_list.size() - 1):
+                print(i)
+                bid = all_bids_list.get(i)
+                self.all_bids_utility[bid] = self.profile.getUtility(bid)
+
             profile_connection.close()
 
 
@@ -265,57 +271,17 @@ class Group40Agent04(DefaultParty):
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
-        domain = self.domain
-        progress = self.progress.get(time() * 1000)
+        lower_window = 0.9
 
-        # self.logger.log(logging.INFO, "Time Pressure: " + str(time_pressure))
-        our_utility = 1
-        our_weights = self.profile.getWeights()
-        our_utilities = self.profile.getUtilities()
+        # Filter all bids based on
+        possible_bids = dict()
+        for bid in self.all_bids_utility:
+            if self.all_bids_utility.get(bid) >= lower_window:
+                possible_bids[bid] = Decimal(str(self.opponent_model.get_predicted_utility(bid))) + self.all_bids_utility.get(bid)
 
-        opponent_utility = 1
-        opponent_weights = self.opponent_model.get_issue_weights()
-        self.logger.log(logging.INFO, "Our Weights: " + str(our_weights) + ", Opponent Weights: " + str(opponent_weights))
-        all_values = dict()
-        issues = list(domain.getIssues())
-        random.shuffle(issues)
-        for issue in issues:
-            curr_values = dict()
-
-
-            our_weight = our_weights.get(issue)
-            our_preference = our_utilities.get(issue)
-            our_total = 0
-
-            opponent_weight = opponent_weights.get(issue)
-            opponent_preference = self.opponent_model.get_issue_value_utilities(issue)
-            opponent_total = 0
-            for value in domain.getValues(issue):
-                opponent_total += opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
-                our_total += our_preference.getUtility(value)
-
-            if our_total == 0:
-                our_total = 1
-
-            if opponent_total == 0:
-                opponent_total = 1
-
-            for value in domain.getValues(issue):
-                opponent_value = opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
-                opponent_normalized = opponent_value / opponent_total
-                our_value = our_preference.getUtility(value)
-                our_normalized = our_value / our_total
-                self.logger.log(logging.INFO, "Our Normal: " + str(our_normalized) + ", Opponent Normal: " + str(opponent_normalized))
-                self.logger.log(logging.INFO, "Our Value: " + str(our_value) + ", Opponent Value: " + str(opponent_value))
-                curr_values[value] = (our_normalized) + Decimal(str(opponent_normalized))
-
-            all_values[issue] = max(curr_values, key=curr_values.get)
-
-            our_utility = self.profile.getUtility(Bid(all_values))
-            opponent_utility = self.opponent_model.get_predicted_utility(Bid(all_values))
-            self.logger.log(logging.INFO, "Our Utility: " + str(our_utility) + ", Opponent Utility: " + str(opponent_utility))
-
-        return Bid(all_values)
+        sorted_bids = sorted(possible_bids.items(), key=lambda x: x[1], reverse=True)
+        index = randint(0, round(len(sorted_bids) * 0.1))
+        return sorted_bids[index][0]
 
     def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
         """Calculate heuristic score for a bid

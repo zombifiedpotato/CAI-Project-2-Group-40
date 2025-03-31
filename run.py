@@ -18,7 +18,7 @@ if not RESULTS_DIR.exists():
 settings = {
     "agents": [
         {
-            "class": "agents.group40.agent04.group40agent02.Group40Agent04",
+            "class": "agents.group40.agent04.group40agent04.Group40Agent04",
             "parameters": {"storage_dir": "agent_storage/Group40/Agent04"},
         },
         # {
