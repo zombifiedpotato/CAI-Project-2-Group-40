@@ -96,9 +96,7 @@ class Group40Agent04(DefaultParty):
             self.domain = self.profile.getDomain()
             self.opponent_model = OpponentModel(self.domain)
             all_bids_list = AllBidsList(self.domain)
-            print(all_bids_list.size())
             for i in range(0, all_bids_list.size() - 1):
-                print(i)
                 bid = all_bids_list.get(i)
                 self.all_bids_utility[bid] = self.profile.getUtility(bid)
 
