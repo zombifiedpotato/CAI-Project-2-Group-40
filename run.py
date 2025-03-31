@@ -22,19 +22,28 @@ settings = {
             "parameters": {"storage_dir": "agent_storage/Group40/Agent05"},
         },
         # {
+        #     "class": "agents.group40.agent05.group40agent05.Group40Agent05",
+        #     "parameters": {"storage_dir": "agent_storage/Group40/Agent052"},
+        # },
+        # {
         #     "class": "agents.group40.agent01.group40agent01.Group40Agent01",
         #     "parameters": {"storage_dir": "agent_storage/Group40/Agent01"},
         # },
+        # {
+        #     "class": "agents.template_agent.template_agent.TemplateAgent",
+        #     "parameters": {"storage_dir": "agent_storage/TemplateAgent"},
+        # },
         {
-            "class": "agents.template_agent.template_agent.TemplateAgent",
-            "parameters": {"storage_dir": "agent_storage/TemplateAgent"},
+            "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
+            "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         },
         # {
         #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
         #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         # },
     ],
-    "profiles": ["domains/domain00/profileA.json", "domains/domain00/profileB.json"],
+    #"profiles": ["domains/domain00/profileA.json", "domains/domain00/profileB.json"],
+    "profiles": ["domains/domain02/profileA.json", "domains/domain02/profileB.json"],
     "deadline_time_ms": 10000,
 }
 

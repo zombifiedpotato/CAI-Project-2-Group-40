@@ -82,14 +82,11 @@ class OpponentModel:
         estimated_utilities = [self.get_predicted_utility(bid) for bid in self.offers] 
         estimated_utility_difference = [t - t1 for t, t1 in zip(estimated_utilities, estimated_utilities[1:])]
 
-        print("\n util diff: ")
-        print(estimated_utility_difference)
-
         return estimated_utility_difference
     
     def percent_below_zero(self, util_diff: List[float]) -> float:
         return len([x for x in util_diff if x < 0]) / len(util_diff)
-
+    
 class IssueEstimator:
     def __init__(self, value_set: DiscreteValueSet):
         if not isinstance(value_set, DiscreteValueSet):
