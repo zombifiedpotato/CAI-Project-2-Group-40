@@ -126,6 +126,7 @@ class Group40Agent05(DefaultParty):
             self.save_data()
             # terminate the agent MUST BE CALLED
             self.logger.log(logging.INFO, "party is terminating:")
+            print(self.progress.get(time() * 1000))
             super().terminate()
         else:
             self.logger.log(logging.WARNING, "Ignoring unknown info " + str(data))
@@ -257,7 +258,12 @@ class Group40Agent05(DefaultParty):
         if bid is None:
             return False
         
-        if (self.profile.getUtility(bid) < self.opponent_model.get_predicted_utility(bid)):
+        reservation_bid = self.profile.getUtility(self.profile.getReservationBid()) if self.profile.getReservationBid() else 0
+        own_utility = self.profile.getUtility(bid)
+        expected_opponent_utility = self.opponent_model.get_predicted_utility(bid)
+        progress = self.progress.get(time() * 1000)
+        
+        if (reservation_bid >= own_utility) or (expected_opponent_utility > own_utility and progress < 0.98):
             return False
     
         # Statistical parameters used
@@ -265,10 +271,8 @@ class Group40Agent05(DefaultParty):
         max_val = 1.0
         epsilon = 0.2  # as specified in the article
         alpha = 1.02
-        beta = 0.0
         rvalue_threshold = 0.1
 
-        from time import time
         progress = self.progress.get(time() * 1000)
 
         # here 'next' refers to the bid that we will put out next
