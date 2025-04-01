@@ -41,14 +41,14 @@ settings = {
         #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
         #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         # },
-        # {
-        #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
-        #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
-        # },
         {
-            "class": "agents.ANL2022.super_agent.super_agent.SuperAgent",
-            "parameters": {"storage_dir": "agent_storage/SuperAgent"},
+            "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
+            "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         },
+        # {
+        #     "class": "agents.ANL2022.super_agent.super_agent.SuperAgent",
+        #     "parameters": {"storage_dir": "agent_storage/SuperAgent"},
+        # },
         # {
         #     "class": "agents.boulware_agent.boulware_agent.BoulwareAgent",
         #     "parameters": {"storage_dir": "agent_storage/BoulwareAgent"},
