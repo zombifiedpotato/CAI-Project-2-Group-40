@@ -316,19 +316,10 @@ class Group40Agent06(DefaultParty):
         return False
 
     def find_bid(self) -> Bid:
-
-        if len(self.opponent_model.offers) > 1:
-            util_diff = self.opponent_model.calculate_concessions()
-            #print(self.opponent_model.percent_below_zero(util_diff))
-
-        # Calculate average given utility 
         
-        avg_given_util = mean(self.calculate_given_utility() or [1])
+        # Get average utility from opponents last 20% of bids 
         avg_given_util = mean(self.calculate_given_utility()[math.ceil(len(self.calculate_given_utility()) * 0.8) :] or [1])
-        print("average", avg_given_util)
-
-        # compose a list of all possible bids
-        lower_window = 0.95 - 0.25 * self.progress.get(time() * 1000)
+        lower_window = 1.0 - avg_given_util * self.progress.get(time() * 1000)
 
         # Filter all bids based on
         possible_bids = dict()
