@@ -21,6 +21,18 @@ tournament_settings = {
             "class": "agents.group40.agent04.group40agent04.Group40Agent04",
             "parameters": {"storage_dir": "agent_storage/group40/Agent04"},
         },
+        # {
+        #     "class": "agents.group40.agent01.group40agent01.Group40Agent01",
+        #     "parameters": {"storage_dir": "agent_storage/group40/Agent01"},
+        # },
+        # {
+        #     "class": "agents.group40.agent02.group40agent02.Group40Agent02",
+        #     "parameters": {"storage_dir": "agent_storage/group40/Agent02"},
+        # },
+        {
+            "class": "agents.group40.agent05.group40agent05.Group40Agent05",
+            "parameters": {"storage_dir": "agent_storage/group40/Agent05"},
+        },
         {
             "class": "agents.boulware_agent.boulware_agent.BoulwareAgent",
         },
@@ -33,12 +45,12 @@ tournament_settings = {
         {
             "class": "agents.linear_agent.linear_agent.LinearAgent",
         },
-        {
-            "class": "agents.random_agent.random_agent.RandomAgent",
-        },
-        {
-            "class": "agents.stupid_agent.stupid_agent.StupidAgent",
-        },
+        # {
+        #     "class": "agents.random_agent.random_agent.RandomAgent",
+        # },
+        # {
+        #     "class": "agents.stupid_agent.stupid_agent.StupidAgent",
+        # },
         {
             "class": "agents.CSE3210.agent2.agent2.Agent2",
         },
@@ -57,39 +69,39 @@ tournament_settings = {
         {
             "class": "agents.CSE3210.agent18.agent18.Agent18",
         },
-        {
-            "class": "agents.CSE3210.agent19.agent19.Agent19",
-        },
+        # {
+        #     "class": "agents.CSE3210.agent19.agent19.Agent19",
+        # },
         {
             "class": "agents.CSE3210.agent22.agent22.Agent22",
         },
-        {
-            "class": "agents.CSE3210.agent24.agent24.Agent24",
-        },
-        {
-            "class": "agents.CSE3210.agent25.agent25.Agent25",
-        },
-        {
-            "class": "agents.CSE3210.agent26.agent26.Agent26",
-        },
-        {
-            "class": "agents.CSE3210.agent27.agent27.Agent27",
-        },
-        {
-            "class": "agents.CSE3210.agent29.agent29.Agent29",
-        },
-        {
-            "class": "agents.CSE3210.agent32.agent32.Agent32",
-        },
+        # {
+        #     "class": "agents.CSE3210.agent24.agent24.Agent24",
+        # },
+        # {
+        #     "class": "agents.CSE3210.agent25.agent25.Agent25",
+        # },
+        # {
+        #     "class": "agents.CSE3210.agent26.agent26.Agent26",
+        # },
+        # {
+        #     "class": "agents.CSE3210.agent27.agent27.Agent27",
+        # },
+        # {
+        #     "class": "agents.CSE3210.agent29.agent29.Agent29",
+        # },
+        # {
+        #     "class": "agents.CSE3210.agent32.agent32.Agent32",
+        # },
         {
             "class": "agents.CSE3210.agent33.agent33.Agent33",
         },
         {
             "class": "agents.CSE3210.agent41.agent41.Agent41",
         },
-        {
-            "class": "agents.CSE3210.agent43.agent43.Agent43",
-        },
+        # {
+        #     "class": "agents.CSE3210.agent43.agent43.Agent43",
+        # },
         {
             "class": "agents.CSE3210.agent50.agent50.Agent50",
         },
