@@ -86,7 +86,7 @@ class OpponentModel:
     
     def percent_below_zero(self, util_diff: List[float]) -> float:
         return len([x for x in util_diff if x < 0]) / len(util_diff)
-    
+     
 class IssueEstimator:
     def __init__(self, value_set: DiscreteValueSet):
         if not isinstance(value_set, DiscreteValueSet):

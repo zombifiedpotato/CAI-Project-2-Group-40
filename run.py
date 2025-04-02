@@ -19,14 +19,14 @@ settings = {
     "agents": [
         {
             "class": "agents.group40.agent05.group40agent05.Group40Agent05",
-            "parameters": {"storage_dir": "agent_storage/Group40/Agent05"},
+            #"parameters": {"storage_dir": "agent_storage/Group40/Agent05"},
         },
         # {
         #     "class": "agents.group40.agent04.group40agent04.Group40Agent04",
         #     "parameters": {"storage_dir": "agent_storage/Group40/Agent04"},
         # },
         # {
-        #     "class": "agents.group40.agent05.group40agent05.Group40Agent05",
+        #     "class": "agen ts.group40.agent05.group40agent05.Group40Agent05",
         #     "parameters": {"storage_dir": "agent_storage/Group40/Agent052"},
         # },
         # {
@@ -37,14 +37,22 @@ settings = {
         #     "class": "agents.template_agent.template_agent.TemplateAgent",
         #     "parameters": {"storage_dir": "agent_storage/TemplateAgent"},
         # },
-        # {
-        #     "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
-        #     "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
-        # },
         {
             "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
-            "parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
+            #"parameters": {"storage_dir": "agent_storage/DreamTeam109Agent"},
         },
+        # {
+        #     "class": "agents.ANL2022.super_agent.super_agent.SuperAgent",
+        #     "parameters": {"storage_dir": "agent_storage/SuperAgent"},
+        # },
+        # {   
+        #     "class": "agents.conceder_agent.conceder_agent.ConcederAgent",
+        #     "parameters": {"storage_dir": "agent_storage/ConcederAgent"},
+        # },
+        # {   
+        #     "class": "agents.linear_agent.linear_agent.LinearAgent",
+        #     "parameters": {"storage_dir": "agent_storage/LinearAgent"},
+        # },
         # {
         #     "class": "agents.ANL2022.super_agent.super_agent.SuperAgent",
         #     "parameters": {"storage_dir": "agent_storage/SuperAgent"},

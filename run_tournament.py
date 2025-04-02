@@ -18,8 +18,8 @@ if not RESULTS_DIR.exists():
 tournament_settings = {
     "agents": [
         {
-            "class": "agents.group40.agent04.group40agent04.Group40Agent04",
-            "parameters": {"storage_dir": "agent_storage/group40/Agent04"},
+            "class": "agents.group40.agent05.group40agent05.Group40Agent05",
+            "parameters": {"storage_dir": "agent_storage/group40/Agent05"},
         },
         # {
         #     "class": "agents.group40.agent01.group40agent01.Group40Agent01",
