@@ -1,3 +1,4 @@
+import multiprocessing
 import shutil
 from collections import defaultdict
 from itertools import permutations
@@ -103,6 +104,7 @@ def run_session(settings) -> Tuple[dict, dict]:
     return results_trace, results_summary
 
 
+
 def run_tournament(tournament_settings: dict) -> Tuple[list, list]:
     # create agent permutations, ensures that every agent plays against every other agent on both sides of a profile set.
     agents = tournament_settings["agents"]
@@ -122,23 +124,40 @@ def run_tournament(tournament_settings: dict) -> Tuple[list, list]:
 
     tournament_results = []
     tournament_steps = []
+    i = 1
     for profiles in profile_sets:
+        print(f"Starting profile {i} of {len(profile_sets)}")
         # quick an dirty check
         assert isinstance(profiles, list) and len(profiles) == 2
-        for agent_duo in permutations(agents, 2):
-            # create session settings dict
+        pool = multiprocessing.Pool()
+        agent_duos = permutations(agents, 2)
+        session_settings = []
+        for agent_duo in agent_duos:
             settings = {
                 "agents": list(agent_duo),
                 "profiles": profiles,
                 "deadline_time_ms": deadline_time_ms,
             }
-
-            # run a single negotiation session
-            _, session_results_summary = run_session(settings)
-
-            # assemble results
+            session_settings.append(settings)
             tournament_steps.append(settings)
+        session_results = pool.map(run_session, session_settings)
+        for _, session_results_summary in session_results:
             tournament_results.append(session_results_summary)
+
+        # for agent_duo in permutations(agents, 2):
+        #     # create session settings dict
+        #     settings = {
+        #         "agents": list(agent_duo),
+        #         "profiles": profiles,
+        #         "deadline_time_ms": deadline_time_ms,
+        #     }
+        #
+        #     # run a single negotiation session
+        #     _, session_results_summary = run_session(settings)
+        #
+        #     # assemble results
+        #     tournament_steps.append(settings)
+        #     tournament_results.append(session_results_summary)
 
     tournament_results_summary = process_tournament_results(tournament_results)
 

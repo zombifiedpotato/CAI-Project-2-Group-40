@@ -54,6 +54,10 @@ settings = {
         #     "parameters": {"storage_dir": "agent_storage/LinearAgent"},
         # },
         # {
+        #     "class": "agents.ANL2022.super_agent.super_agent.SuperAgent",
+        #     "parameters": {"storage_dir": "agent_storage/SuperAgent"},
+        # },
+        # {
         #     "class": "agents.boulware_agent.boulware_agent.BoulwareAgent",
         #     "parameters": {"storage_dir": "agent_storage/BoulwareAgent"},
         # },
