@@ -319,7 +319,7 @@ class Group40Agent06(DefaultParty):
         
         # Get average utility from opponents last 20% of bids 
         avg_given_util = mean(self.calculate_given_utility()[math.ceil(len(self.calculate_given_utility()) * 0.8) :] or [1])
-        lower_window = 1.0 - avg_given_util * self.progress.get(time() * 1000)
+        lower_window = 1.0 - float(avg_given_util) * self.progress.get(time() * 1000)
 
         # Filter all bids based on
         possible_bids = dict()

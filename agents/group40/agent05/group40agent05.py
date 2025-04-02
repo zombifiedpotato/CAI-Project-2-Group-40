@@ -1,7 +1,9 @@
 import logging
+import math
 import random
 from decimal import Decimal
 from random import randint
+from statistics import mean
 from time import time
 from typing import List, cast, Dict
 
@@ -314,13 +316,10 @@ class Group40Agent05(DefaultParty):
         return False
 
     def find_bid(self) -> Bid:
-
-        if len(self.opponent_model.offers) > 1:
-            util_diff = self.opponent_model.calculate_concessions()
-            print(self.opponent_model.percent_below_zero(util_diff))
-
-        # compose a list of all possible bids
-        lower_window = 0.95 - 0.25 * self.progress.get(time() * 1000)
+        
+        # Get average utility from opponents last 20% of bids 
+        avg_given_util = mean(self.calculate_given_utility()[math.ceil(len(self.calculate_given_utility()) * 0.8) :] or [1])
+        lower_window = 1.0 - float(avg_given_util) * self.progress.get(time() * 1000)
 
         # Filter all bids based on
         possible_bids = dict()
@@ -332,15 +331,8 @@ class Group40Agent05(DefaultParty):
         index = randint(0, round(len(sorted_bids) * 0.1))
         return sorted_bids[index][0]
     
-    # def calculate_given_utility(self) -> List[float]:
-    #     if len(self.offers) < 2:
-    #         return None  # Not enough data to compare
-        
-    #     # Calculates estimated utility value given current estimated utilities and then calculates the differences between every index t and t+1
-    #     given_utilities = [self.get_predicted_utility(bid) for bid in self.offers] 
-    #     estimated_utility_difference = [t - t1 for t, t1 in zip(estimated_utilities, estimated_utilities[1:])]
-
-    #     return estimated_utility_difference
+    def calculate_given_utility(self) -> List[float]:
+        return [self.profile.getUtility(bid) for bid in self.opponent_model.offers]  # Calculates given utility value 
 
     def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
         """Calculate heuristic score for a bid
