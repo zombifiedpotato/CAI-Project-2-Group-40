@@ -125,7 +125,6 @@ class Group40Agent05(DefaultParty):
 
         # Finished will be send if the negotiation has ended (through agreement or deadline)
         elif isinstance(data, Finished):
-            self.save_data()
             # terminate the agent MUST BE CALLED
             self.logger.log(logging.INFO, "party is terminating:")
             print(self.progress.get(time() * 1000))
@@ -214,16 +213,6 @@ class Group40Agent05(DefaultParty):
 
         self.max_time_for_turn = max(self.max_time_for_turn, progress - self.last_my_turn_time)
         self.last_my_turn_time = progress
-
-
-    def save_data(self):
-        """This method is called after the negotiation is finished. It can be used to store data
-        for learning capabilities. Note that no extensive calculations can be done within this method.
-        Taking too much time might result in your agent being killed, so use it for storage only.
-        """
-        data = "Data for learning (see README.md)"
-        with open(f"{self.storage_dir}/data.md", "w") as f:
-            f.write(data)
 
     # calculate the maximum utility of the recorded opponent bids
     # where the bid was offered after start
@@ -333,30 +322,3 @@ class Group40Agent05(DefaultParty):
     
     def calculate_given_utility(self) -> List[float]:
         return [self.profile.getUtility(bid) for bid in self.opponent_model.offers]  # Calculates given utility value 
-
-    def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
-        """Calculate heuristic score for a bid
-
-        Args:
-            bid (Bid): Bid to score
-            alpha (float, optional): Trade-off factor between self interested and
-                altruistic behaviour. Defaults to 0.95.
-            eps (float, optional): Time pressure factor, balances between conceding
-                and Boulware behaviour over time. Defaults to 0.1.
-
-        Returns:
-            float: score
-        """
-        progress = self.progress.get(time() * 1000)
-
-        our_utility = float(self.profile.getUtility(bid))
-
-        time_pressure = 1.0 - progress ** (1 / eps)
-        score = alpha * time_pressure * our_utility
-
-        if self.opponent_model is not None:
-            opponent_utility = self.opponent_model.get_predicted_utility(bid)
-            opponent_score = (1.0 - alpha * time_pressure) * opponent_utility
-            score += opponent_score
-
-        return score
