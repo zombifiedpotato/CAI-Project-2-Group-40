@@ -29,6 +29,7 @@ from geniusweb.profileconnection.ProfileConnectionFactory import (
 )
 from geniusweb.progress.ProgressTime import ProgressTime
 from geniusweb.references.Parameters import Parameters
+from geniusweb.utils import toStr
 from tudelft_utilities_logging.ReportToLogger import ReportToLogger
 
 from .utils.opponent_model import OpponentModel, IssueEstimator
@@ -254,7 +255,7 @@ class Group40Agent06(DefaultParty):
         return curr_sum / Decimal(n) if n else Decimal(0.0)
 
     def accept_condition(self, bid: Bid) -> bool:
-
+        
         # Skip the first round because bid is None
         if bid is None:
             return False
@@ -329,11 +330,11 @@ class Group40Agent06(DefaultParty):
                 
         # Sort the possible bids based on best social welfare and select a random one from the top 10%
         sorted_bids = sorted(possible_bids.items(), key=lambda x: x[1], reverse=True)
-        index = randint(0, round((len(sorted_bids) - 1) * max(1.0 - self.progress.get(time() * 1000), 0.1)))
+        index = randint(0, round(len(sorted_bids) * 0.1))
         return sorted_bids[index][0]
     
     def calculate_given_utility(self) -> List[float]:
-        return [self.opponent_model.get_predicted_utility(bid) for bid in self.opponent_model.offers]  # Calculates given utility value
+        return [self.profile.getUtility(bid) for bid in self.opponent_model.offers]  # Calculates given utility value 
 
     def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
         """Calculate heuristic score for a bid
