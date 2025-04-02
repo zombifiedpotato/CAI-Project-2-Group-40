@@ -33,7 +33,7 @@ from tudelft_utilities_logging.ReportToLogger import ReportToLogger
 from .utils.opponent_model import OpponentModel, IssueEstimator
 
 
-class Group40Agent02(DefaultParty):
+class Group40Agent04(DefaultParty):
     """
     Template of a Python geniusweb agent.
     """
@@ -58,6 +58,7 @@ class Group40Agent02(DefaultParty):
         # OUR PARAMETERS
         # time_to_bid: map of time (in range [0,1]) to the opponent bid that was offered at that time
         self.time_to_bid: Dict[float, Bid] = {}
+        self.all_bids_utility: Dict[Bid, float] = dict()
 
         # last_my_turn_time: the progress value (in range [0, 1]) of when it was our turn last
         self.last_my_turn_time = None
@@ -92,10 +93,13 @@ class Group40Agent02(DefaultParty):
                 data.getProfile().getURI(), self.getReporter()
             )
             self.profile = profile_connection.getProfile()
-            self.logger.log(logging.INFO, "Utilities: " + toStr(self.profile.getUtilities()))
-            self.logger.log(logging.INFO, "Weights: " + toStr(self.profile.getWeights()))
             self.domain = self.profile.getDomain()
             self.opponent_model = OpponentModel(self.domain)
+            all_bids_list = AllBidsList(self.domain)
+            for i in range(0, all_bids_list.size() - 1):
+                bid = all_bids_list.get(i)
+                self.all_bids_utility[bid] = self.profile.getUtility(bid)
+
             profile_connection.close()
 
 
@@ -155,7 +159,7 @@ class Group40Agent02(DefaultParty):
         Returns:
             str: Agent description
         """
-        return "Agent01 of group 40."
+        return "Agent03 of group 40."
 
     def opponent_action(self, action):
         """Process an action that was received from the opponent.
@@ -238,6 +242,15 @@ class Group40Agent02(DefaultParty):
                 curr_max = max(curr_max, self.profile.getUtility(bid))
         return curr_max
 
+    # Calculate the minimum utility of the recorded opponent bids
+    # where the bid was offered after start
+    def _calc_min_w(self, start) -> Decimal:
+        curr_min = Decimal(1.0)
+        for t, bid in self.time_to_bid.items():
+            if t >= start:
+                curr_min = min(curr_min, self.profile.getUtility(bid))
+        return curr_min
+
     # calculate the average utility of the recorded opponent bids
     # where the bid was offered after start
     def _calc_avg_w(self, start) -> Decimal:
@@ -250,6 +263,14 @@ class Group40Agent02(DefaultParty):
         return curr_sum / Decimal(n) if n else Decimal(0.0)
 
     def accept_condition(self, bid: Bid) -> bool:
+        # Statistical parameters used
+        min_val = 0.7
+        max_val = 1.0
+        epsilon = 0.2  # as specified in the article
+        alpha = 1.02
+        beta = 0.0
+        rvalue_threshold = 0.1
+
         if bid is None:
             return False
 
@@ -264,85 +285,49 @@ class Group40Agent02(DefaultParty):
 
         if our_reservation_util > opponent_bid_util:
             return False
+        # calculate the starting time (in range [0,1]) of the window of bids
+        r = Decimal(1.0) - Decimal(progress)
+        start = Decimal(progress) - r
 
+        # calulate the lowest utility offered in previous bids
+        min_opponent_bid_util = self._calc_min_w(start)
 
-        # PHASE 1, before 30% of the negotiation is done
-        if progress < 0.3:
-            return opponent_bid_util >= our_next_util * Decimal(1.02) # 2% more than what we want increase
+        # First Equation: Acceptance probability
+        p_accept = 1.0 if opponent_bid_util >= min_opponent_bid_util else 1 - (min_opponent_bid_util - opponent_bid_util)
 
-        # PHASE 2, 30%-60% of the negotiation is done
-        if progress < 0.6:
-            return opponent_bid_util >= our_next_util
+        # Generate random rValue
+        r_value = random.uniform(0, 1)
 
-        # PHASE 3, after 60% of the negotiation is done but before negotiation is finished
-        if progress < 1 - self.max_time_for_turn:
-            # calculate the starting time (in range [0,1]) of the window of bids
-            r = Decimal(1.0) - Decimal(progress)
-            w_start = Decimal(progress) - r
+        # Time-based delta adjustment
+        delta = min_val + (max_val - min_val) * ((1.0 - progress)**epsilon)
+        r_value += delta
 
-            # calculate the utility threshold
-            util_threshold = self._calc_max_w(w_start)
-            return opponent_bid_util >= our_next_util or opponent_bid_util >= util_threshold
+        # Statistical condition
+        if (p_accept - r_value) >= rvalue_threshold:
+            return True
 
-        # PHASE 4, after 95% of the negotiation is done, always accept the (final) offer
-        # Note (Sinan): should we not always accept in phase 4 since any bid with util > our reservation value
-        # is better than not accepting an offer at all? Also, it is specified in the literature that constant values
-        # are domain dependent and almost never are optimal
-        return opponent_bid_util > 0.8
+        # AC_Next(1.02) condition
+        if opponent_bid_util >= our_next_util * Decimal(alpha): # 2% more than what we want increase
+            return True
+
+        if progress + self.max_time_for_turn > 1:
+            return True
+
+        return False
 
     def find_bid(self) -> Bid:
         # compose a list of all possible bids
-        domain = self.domain
-        progress = self.progress.get(time() * 1000)
+        lower_window = 0.9
 
-        # self.logger.log(logging.INFO, "Time Pressure: " + str(time_pressure))
-        our_utility = 1
-        our_weights = self.profile.getWeights()
-        our_utilities = self.profile.getUtilities()
+        # Filter all bids based on
+        possible_bids = dict()
+        for bid in self.all_bids_utility:
+            if self.all_bids_utility.get(bid) >= lower_window:
+                possible_bids[bid] = Decimal(str(self.opponent_model.get_predicted_utility(bid))) + self.all_bids_utility.get(bid)
 
-        opponent_utility = 1
-        opponent_weights = self.opponent_model.get_issue_weights()
-        self.logger.log(logging.INFO, "Our Weights: " + str(our_weights) + ", Opponent Weights: " + str(opponent_weights))
-        all_values = dict()
-        issues = list(domain.getIssues())
-        random.shuffle(issues)
-        for issue in issues:
-            curr_values = dict()
-
-
-            our_weight = our_weights.get(issue)
-            our_preference = our_utilities.get(issue)
-            our_total = 0
-
-            opponent_weight = opponent_weights.get(issue)
-            opponent_preference = self.opponent_model.get_issue_value_utilities(issue)
-            opponent_total = 0
-            for value in domain.getValues(issue):
-                opponent_total += opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
-                our_total += our_preference.getUtility(value)
-
-            if our_total == 0:
-                our_total = 1
-
-            if opponent_total == 0:
-                opponent_total = 1
-
-            for value in domain.getValues(issue):
-                opponent_value = opponent_preference.get(value) if opponent_preference.get(value) is not None else 0
-                opponent_normalized = opponent_value / opponent_total
-                our_value = our_preference.getUtility(value)
-                our_normalized = our_value / our_total
-                self.logger.log(logging.INFO, "Our Normal: " + str(our_normalized) + ", Opponent Normal: " + str(opponent_normalized))
-                self.logger.log(logging.INFO, "Our Value: " + str(our_value) + ", Opponent Value: " + str(opponent_value))
-                curr_values[value] = (our_normalized) + Decimal(str(opponent_normalized))
-
-            all_values[issue] = max(curr_values, key=curr_values.get)
-
-            our_utility = self.profile.getUtility(Bid(all_values))
-            opponent_utility = self.opponent_model.get_predicted_utility(Bid(all_values))
-            self.logger.log(logging.INFO, "Our Utility: " + str(our_utility) + ", Opponent Utility: " + str(opponent_utility))
-
-        return Bid(all_values)
+        sorted_bids = sorted(possible_bids.items(), key=lambda x: x[1], reverse=True)
+        index = randint(0, round(len(sorted_bids) * 0.1))
+        return sorted_bids[index][0]
 
     def score_bid(self, bid: Bid, alpha: float = 0.95, eps: float = 0.1) -> float:
         """Calculate heuristic score for a bid

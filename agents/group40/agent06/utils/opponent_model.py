@@ -1,9 +1,11 @@
 from collections import defaultdict
+from typing import Dict, List
 
 from geniusweb.issuevalue.Bid import Bid
 from geniusweb.issuevalue.DiscreteValueSet import DiscreteValueSet
 from geniusweb.issuevalue.Domain import Domain
 from geniusweb.issuevalue.Value import Value
+from numpy import var
 
 
 class OpponentModel:
@@ -55,8 +57,36 @@ class OpponentModel:
         )
 
         return predicted_utility
+    
+    def get_issue_weights(self) -> Dict[Value, float]: 
+        weights_dict = {}
+        for issue_id, issue_estimator in self.issue_estimators.items():
+            weights_dict[issue_id] = issue_estimator.weight
 
+        return weights_dict
 
+    def get_issue_value_utilities(self, issue_id: str) -> Dict[Value, float]:
+        if issue_id not in self.issue_estimators:
+            raise ValueError(f"Issue ID '{issue_id}' not found in opponent model.")
+
+        issue_estimator = self.issue_estimators[issue_id]
+        possible_values = issue_estimator.value_trackers.keys()
+        # Returns a dictionary with estimated utilities for each value
+        return {value: issue_estimator.get_value_utility(value) for value in possible_values}
+    
+    def calculate_concessions(self) -> List[float]:
+        if len(self.offers) < 2:
+            return None  # Not enough data to compare
+        
+        # Calculates estimated utility value given current estimated utilities and then calculates the differences between every index t and t+1
+        estimated_utilities = [self.get_predicted_utility(bid) for bid in self.offers] 
+        estimated_utility_difference = [t - t1 for t, t1 in zip(estimated_utilities, estimated_utilities[1:])]
+
+        return estimated_utility_difference
+    
+    def percent_below_zero(self, util_diff: List[float]) -> float:
+        return len([x for x in util_diff if x < 0]) / len(util_diff)
+     
 class IssueEstimator:
     def __init__(self, value_set: DiscreteValueSet):
         if not isinstance(value_set, DiscreteValueSet):
@@ -103,6 +133,7 @@ class IssueEstimator:
         return 0
 
 
+# this class tracks how often a specific value has been offered and tracks its utility
 class ValueEstimator:
     def __init__(self):
         self.count = 0

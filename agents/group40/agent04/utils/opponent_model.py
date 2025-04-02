@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Dict
+from typing import Dict, List
 
 from geniusweb.issuevalue.Bid import Bid
 from geniusweb.issuevalue.DiscreteValueSet import DiscreteValueSet
@@ -57,7 +57,17 @@ class OpponentModel:
 
         return predicted_utility
     
-    def get_issue_weights(self) -> Dict[Value, float]: 
+    def calculate_concessions(self) -> List[float]:
+        if len(self.offers) < 2:
+            return None  # Not enough data to compare
+        
+        # Calculates estimated utility value given current estimated utilities and then calculates the differences between every index t and t+1
+        estimated_utilities = [self.get_predicted_utility(bid) for bid in self.offers] 
+        estimated_utility_difference = [t - t1 for t, t1 in zip(estimated_utilities, estimated_utilities[1:])]
+
+        return estimated_utility_difference
+
+    def get_issue_weights(self) -> Dict[Value, float]:
         weights_dict = {}
         for issue_id, issue_estimator in self.issue_estimators.items():
             weights_dict[issue_id] = issue_estimator.weight
@@ -72,6 +82,9 @@ class OpponentModel:
         possible_values = issue_estimator.value_trackers.keys()
         # Returns a dictionary with estimated utilities for each value
         return {value: issue_estimator.get_value_utility(value) for value in possible_values}
+
+    def percent_below_zero(self, util_diff: List[float]) -> float:
+        return len([x for x in util_diff if x < 0]) / len(util_diff)
 
 class IssueEstimator:
     def __init__(self, value_set: DiscreteValueSet):
