@@ -321,12 +321,14 @@ class Group40Agent06(DefaultParty):
         avg_given_util = mean(self.calculate_given_utility()[math.ceil(len(self.calculate_given_utility()) * 0.8) :] or [1])
         lower_window = 1.0 - float(avg_given_util) * self.progress.get(time() * 1000)
 
-        # Filter all bids based on
+        # Filter all bids based on our minimum window. We only consider bids which have a higher utility than our minimum window
         possible_bids = dict()
         for bid in self.all_bids_utility:
             if self.all_bids_utility.get(bid) >= lower_window:
+                # Add bids to possible_bids list with the Social Welfare value
                 possible_bids[bid] = Decimal(str(self.opponent_model.get_predicted_utility(bid))) + self.all_bids_utility.get(bid)
-
+                
+        # Sort the possible bids based on best social welfare and select a random one from the top 10%
         sorted_bids = sorted(possible_bids.items(), key=lambda x: x[1], reverse=True)
         index = randint(0, round(len(sorted_bids) * 0.1))
         return sorted_bids[index][0]
