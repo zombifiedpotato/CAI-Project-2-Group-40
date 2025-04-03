@@ -108,13 +108,13 @@ def agents_vs_anl(agent_num: int):
 
 
 profile_sets_symmetric = [
-    ["domains/domain00/profileA.json", "domains/domain00/profileB.json"],
+    ["domains/domain07/profileA.json", "domains/domain07/profileB.json"],
     ["domains/domain01/profileA.json", "domains/domain01/profileB.json"],
 ]
 
 profile_sets_asymmetric = [
-    ["domains/domain00/profileA.json", "domains/domain00/profileB.json"],
-    ["domains/domain01/profileA.json", "domains/domain01/profileB.json"],
+    ["domains/domain19/profileA.json", "domains/domain19/profileB.json"],
+    ["domains/domain42/profileA.json", "domains/domain42/profileB.json"],
 ]
 
 tournament_our_symmetric = {
