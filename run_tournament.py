@@ -224,7 +224,7 @@ def run_and_log_tournament(name, settings):
     with open(tournament_dir / "tournament_results.json", "w", encoding="utf-8") as f:
         json.dump(tournament_results, f, indent=2)
 
-    tournament_results_summary.to_csv(tournament_dir / "tournament_results_summary.csv")
+    tournament_results_summary.to_csv(tournament_dir / "our_asymmetric.csv")
 
 if __name__ == '__main__':
     # Iterate over all tournament settings and run them
