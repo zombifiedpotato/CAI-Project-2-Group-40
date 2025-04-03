@@ -1,0 +1,842 @@
+[
+  {
+    "num_offers": 869,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.3304400755,
+    "agent_2": "Agent007",
+    "utility_2": 1.0,
+    "nash_product": 0.3304400755,
+    "social_welfare": 1.3304400754999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1345,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.1871816053,
+    "agent_4": "DreamTeam109Agent",
+    "utility_4": 0.9482467488,
+    "nash_product": 0.17749434866088987,
+    "social_welfare": 1.1354283541,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 591,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.73537925,
+    "agent_2": "RGAgent",
+    "utility_2": 0.8776822357,
+    "nash_product": 0.6454293042273893,
+    "social_welfare": 1.6130614857,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 930,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.97956,
+    "agent_4": "AgentFish",
+    "utility_4": 0.2480536727,
+    "nash_product": 0.242983455630012,
+    "social_welfare": 1.2276136727,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 89,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.2668597367,
+    "agent_2": "GEAAgent",
+    "utility_2": 0.2991073161,
+    "nash_product": 0.07981969961948968,
+    "social_welfare": 0.5659670528,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 725,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.0356827705,
+    "agent_4": "ThirdAgent",
+    "utility_4": 0.7701739182,
+    "nash_product": 0.027481939168216375,
+    "social_welfare": 0.8058566887,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 851,
+    "agent_1": "Agent007",
+    "utility_1": 0.533567332,
+    "agent_2": "Group40Agent04",
+    "utility_2": 0.9152332465,
+    "nash_product": 0.4883385614927033,
+    "social_welfare": 1.4488005785,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 3163,
+    "agent_3": "Agent007",
+    "utility_3": 0.3308786955,
+    "agent_4": "DreamTeam109Agent",
+    "utility_4": 0.989547558,
+    "nash_product": 0.3274202051262506,
+    "social_welfare": 1.3204262535,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 617,
+    "agent_1": "Agent007",
+    "utility_1": 0.73613,
+    "agent_2": "RGAgent",
+    "utility_2": 0.8770536727,
+    "nash_product": 0.645625520084651,
+    "social_welfare": 1.6131836727,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1018,
+    "agent_3": "Agent007",
+    "utility_3": 1.0,
+    "agent_4": "AgentFish",
+    "utility_4": 0.0407329955,
+    "nash_product": 0.0407329955,
+    "social_welfare": 1.0407329955,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 89,
+    "agent_1": "Agent007",
+    "utility_1": 0.5738700755,
+    "agent_2": "GEAAgent",
+    "utility_2": 0.371,
+    "nash_product": 0.2129057980105,
+    "social_welfare": 0.9448700755,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 837,
+    "agent_3": "Agent007",
+    "utility_3": 0.5320633386,
+    "agent_4": "ThirdAgent",
+    "utility_4": 0.7627882281,
+    "nash_product": 0.4058516512876643,
+    "social_welfare": 1.2948515667,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1200,
+    "agent_1": "DreamTeam109Agent",
+    "utility_1": 0.997505725,
+    "agent_2": "Group40Agent04",
+    "utility_2": 0.0430172965,
+    "nash_product": 0.04290999953277247,
+    "social_welfare": 1.0405230215,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 3058,
+    "agent_3": "DreamTeam109Agent",
+    "utility_3": 0.9929782468,
+    "agent_4": "Agent007",
+    "utility_4": 0.0798974819,
+    "nash_product": 0.07933646150079673,
+    "social_welfare": 1.0728757287,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1137,
+    "agent_1": "DreamTeam109Agent",
+    "utility_1": 0,
+    "agent_2": "RGAgent",
+    "utility_2": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 3994,
+    "agent_3": "DreamTeam109Agent",
+    "utility_3": 0.99663384,
+    "agent_4": "AgentFish",
+    "utility_4": 0.051090438,
+    "nash_product": 0.050918459411221924,
+    "social_welfare": 1.047724278,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 93,
+    "agent_5": "DreamTeam109Agent",
+    "utility_5": 0,
+    "agent_6": "GEAAgent",
+    "utility_6": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 1019,
+    "agent_7": "DreamTeam109Agent",
+    "utility_7": 0,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 626,
+    "agent_5": "RGAgent",
+    "utility_5": 0.534583487,
+    "agent_6": "Group40Agent04",
+    "utility_6": 0.9151472135,
+    "nash_product": 0.48922258851116346,
+    "social_welfare": 1.4497307005,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 714,
+    "agent_7": "RGAgent",
+    "utility_7": 0.73263,
+    "agent_8": "Agent007",
+    "utility_8": 0.8783911567,
+    "nash_product": 0.643535713133121,
+    "social_welfare": 1.6110211567000001,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1048,
+    "agent_5": "RGAgent",
+    "utility_5": 0,
+    "agent_6": "DreamTeam109Agent",
+    "utility_6": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 546,
+    "agent_7": "RGAgent",
+    "utility_7": 0.977065725,
+    "agent_8": "AgentFish",
+    "utility_8": 0.2503379737,
+    "nash_product": 0.24459665376822143,
+    "social_welfare": 1.2274036986999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 84,
+    "agent_5": "RGAgent",
+    "utility_5": 0.73263,
+    "agent_6": "GEAAgent",
+    "utility_6": 0.8783911567,
+    "nash_product": 0.643535713133121,
+    "social_welfare": 1.6110211567000001,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 632,
+    "agent_7": "RGAgent",
+    "utility_7": 0.73320246,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0.8769586732,
+    "nash_product": 0.642988256508576,
+    "social_welfare": 1.6101611332,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 947,
+    "agent_5": "AgentFish",
+    "utility_5": 0.532089212,
+    "agent_6": "Group40Agent04",
+    "utility_6": 0.9174315145,
+    "nash_product": 0.4881554116142716,
+    "social_welfare": 1.4495207265,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1997,
+    "agent_7": "AgentFish",
+    "utility_7": 0.3304400755,
+    "agent_8": "Agent007",
+    "utility_8": 1.0,
+    "nash_product": 0.3304400755,
+    "social_welfare": 1.3304400754999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 2449,
+    "agent_5": "AgentFish",
+    "utility_5": 0.3313119605,
+    "agent_6": "DreamTeam109Agent",
+    "utility_6": 0.9919268585,
+    "nash_product": 0.32863723216224106,
+    "social_welfare": 1.323238819,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 733,
+    "agent_7": "AgentFish",
+    "utility_7": 0.3304400755,
+    "agent_8": "RGAgent",
+    "utility_8": 1.0,
+    "nash_product": 0.3304400755,
+    "social_welfare": 1.3304400754999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 12,
+    "agent_5": "AgentFish",
+    "utility_5": 0.7487974968,
+    "agent_6": "GEAAgent",
+    "utility_6": 0.7095260449,
+    "nash_product": 0.5312913263355244,
+    "social_welfare": 1.4583235417,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 719,
+    "agent_7": "AgentFish",
+    "utility_7": 0.5738700755,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0.371,
+    "nash_product": 0.2129057980105,
+    "social_welfare": 0.9448700755,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 82,
+    "agent_5": "GEAAgent",
+    "utility_5": 0.531083487,
+    "agent_6": "Group40Agent04",
+    "utility_6": 0.9164846975,
+    "nash_product": 0.4867298889304401,
+    "social_welfare": 1.4475681845,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 82,
+    "agent_7": "GEAAgent",
+    "utility_7": 0.554272737,
+    "agent_8": "Agent007",
+    "utility_8": 0.7084550993,
+    "nash_product": 0.3926773469306178,
+    "social_welfare": 1.2627278362999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 86,
+    "agent_9": "GEAAgent",
+    "utility_9": 0,
+    "agent_10": "DreamTeam109Agent",
+    "utility_10": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 28,
+    "agent_11": "GEAAgent",
+    "utility_11": 0.73537925,
+    "agent_12": "RGAgent",
+    "utility_12": 0.8776822357,
+    "nash_product": 0.6454293042273893,
+    "social_welfare": 1.6130614857,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 55,
+    "agent_9": "GEAAgent",
+    "utility_9": 0.735113845,
+    "agent_10": "AgentFish",
+    "utility_10": 0.8771397057,
+    "nash_product": 0.6447975416592954,
+    "social_welfare": 1.6122535507,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 9,
+    "agent_11": "GEAAgent",
+    "utility_11": 0.73276384,
+    "agent_12": "ThirdAgent",
+    "utility_12": 0.8874111152,
+    "nash_product": 0.6502627764326344,
+    "social_welfare": 1.6201749552,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1032,
+    "agent_9": "ThirdAgent",
+    "utility_9": 0.5819724855,
+    "agent_10": "Group40Agent04",
+    "utility_10": 0.1393064748,
+    "nash_product": 0.08107253538559912,
+    "social_welfare": 0.7212789603,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1756,
+    "agent_11": "ThirdAgent",
+    "utility_11": 0.4993098426,
+    "agent_12": "Agent007",
+    "utility_12": 0.1427193948,
+    "nash_product": 0.07126119855355527,
+    "social_welfare": 0.6420292374000001,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1294,
+    "agent_9": "ThirdAgent",
+    "utility_9": 0,
+    "agent_10": "DreamTeam109Agent",
+    "utility_10": 0,
+    "nash_product": 0,
+    "social_welfare": 0,
+    "result": "failed"
+  },
+  {
+    "num_offers": 376,
+    "agent_11": "ThirdAgent",
+    "utility_11": 0.73613,
+    "agent_12": "RGAgent",
+    "utility_12": 0.8770536727,
+    "nash_product": 0.645625520084651,
+    "social_welfare": 1.6131836727,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 362,
+    "agent_9": "ThirdAgent",
+    "utility_9": 0.7372031,
+    "agent_10": "AgentFish",
+    "utility_10": 0.7415879956,
+    "nash_product": 0.5467009692791064,
+    "social_welfare": 1.4787910956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 106,
+    "agent_11": "ThirdAgent",
+    "utility_11": 0.534583487,
+    "agent_12": "GEAAgent",
+    "utility_12": 0.9151472135,
+    "nash_product": 0.48922258851116346,
+    "social_welfare": 1.4497307005,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 832,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.9831526926,
+    "agent_2": "Agent007",
+    "utility_2": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1779,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.3778318595,
+    "agent_4": "DreamTeam109Agent",
+    "utility_4": 0.9976559983,
+    "nash_product": 0.3769462209790178,
+    "social_welfare": 1.3754878578,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 618,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.9831526926,
+    "agent_2": "RGAgent",
+    "utility_2": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 962,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.9831526926,
+    "agent_4": "AgentFish",
+    "utility_4": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 86,
+    "agent_1": "Group40Agent04",
+    "utility_1": 0.9831526926,
+    "agent_2": "GEAAgent",
+    "utility_2": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 980,
+    "agent_3": "Group40Agent04",
+    "utility_3": 0.9831526926,
+    "agent_4": "ThirdAgent",
+    "utility_4": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 813,
+    "agent_1": "Agent007",
+    "utility_1": 0.7280091618,
+    "agent_2": "Group40Agent04",
+    "utility_2": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 2821,
+    "agent_3": "Agent007",
+    "utility_3": 0.5452024871,
+    "agent_4": "DreamTeam109Agent",
+    "utility_4": 0.9968680126,
+    "nash_product": 0.5434949197799541,
+    "social_welfare": 1.5420704996999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 641,
+    "agent_1": "Agent007",
+    "utility_1": 0.7280091618,
+    "agent_2": "RGAgent",
+    "utility_2": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 546,
+    "agent_3": "Agent007",
+    "utility_3": 0.8003460179,
+    "agent_4": "AgentFish",
+    "utility_4": 0.7470537017,
+    "nash_product": 0.5979014553130495,
+    "social_welfare": 1.5473997196,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 81,
+    "agent_1": "Agent007",
+    "utility_1": 0.9831526926,
+    "agent_2": "GEAAgent",
+    "utility_2": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 738,
+    "agent_3": "Agent007",
+    "utility_3": 0.9831526926,
+    "agent_4": "ThirdAgent",
+    "utility_4": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1518,
+    "agent_1": "DreamTeam109Agent",
+    "utility_1": 0.8573067454,
+    "agent_2": "Group40Agent04",
+    "utility_2": 0.3349086517,
+    "nash_product": 0.28711944619522917,
+    "social_welfare": 1.1922153971,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 2274,
+    "agent_3": "DreamTeam109Agent",
+    "utility_3": 0.9831526926,
+    "agent_4": "Agent007",
+    "utility_4": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1034,
+    "agent_1": "DreamTeam109Agent",
+    "utility_1": 0.9831526926,
+    "agent_2": "RGAgent",
+    "utility_2": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 2112,
+    "agent_3": "DreamTeam109Agent",
+    "utility_3": 0.9831526926,
+    "agent_4": "AgentFish",
+    "utility_4": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 29,
+    "agent_5": "DreamTeam109Agent",
+    "utility_5": 0.9831526926,
+    "agent_6": "GEAAgent",
+    "utility_6": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 471,
+    "agent_7": "DreamTeam109Agent",
+    "utility_7": 0.9831526926,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 617,
+    "agent_5": "RGAgent",
+    "utility_5": 0.7280091618,
+    "agent_6": "Group40Agent04",
+    "utility_6": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 730,
+    "agent_7": "RGAgent",
+    "utility_7": 0.9831526926,
+    "agent_8": "Agent007",
+    "utility_8": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1096,
+    "agent_5": "RGAgent",
+    "utility_5": 0.5452024871,
+    "agent_6": "DreamTeam109Agent",
+    "utility_6": 0.9968680126,
+    "nash_product": 0.5434949197799541,
+    "social_welfare": 1.5420704996999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 578,
+    "agent_7": "RGAgent",
+    "utility_7": 0.9831526926,
+    "agent_8": "AgentFish",
+    "utility_8": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 25,
+    "agent_5": "RGAgent",
+    "utility_5": 0.9831526926,
+    "agent_6": "GEAAgent",
+    "utility_6": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 471,
+    "agent_7": "RGAgent",
+    "utility_7": 0.9831526926,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 505,
+    "agent_9": "AgentFish",
+    "utility_9": 0.7280091618,
+    "agent_10": "Group40Agent04",
+    "utility_10": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 793,
+    "agent_11": "AgentFish",
+    "utility_11": 0.7280091618,
+    "agent_12": "Agent007",
+    "utility_12": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 4783,
+    "agent_5": "AgentFish",
+    "utility_5": 0.3778318595,
+    "agent_6": "DreamTeam109Agent",
+    "utility_6": 0.9976559983,
+    "nash_product": 0.3769462209790178,
+    "social_welfare": 1.3754878578,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 62,
+    "agent_7": "AgentFish",
+    "utility_7": 0.7280091618,
+    "agent_8": "RGAgent",
+    "utility_8": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 27,
+    "agent_5": "AgentFish",
+    "utility_5": 0.815782065,
+    "agent_6": "GEAAgent",
+    "utility_6": 0.687659469,
+    "nash_product": 0.5609802616376234,
+    "social_welfare": 1.5034415339999998,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 253,
+    "agent_7": "AgentFish",
+    "utility_7": 0.8003460179,
+    "agent_8": "ThirdAgent",
+    "utility_8": 0.7470537017,
+    "nash_product": 0.5979014553130495,
+    "social_welfare": 1.5473997196,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 3,
+    "agent_5": "GEAAgent",
+    "utility_5": 0.7280091618,
+    "agent_6": "Group40Agent04",
+    "utility_6": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 86,
+    "agent_7": "GEAAgent",
+    "utility_7": 0.6584865054,
+    "agent_8": "Agent007",
+    "utility_8": 0.9203048604,
+    "nash_product": 0.6060083314274308,
+    "social_welfare": 1.5787913658,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 86,
+    "agent_5": "GEAAgent",
+    "utility_5": 0.5452024871,
+    "agent_6": "DreamTeam109Agent",
+    "utility_6": 0.9968680126,
+    "nash_product": 0.5434949197799541,
+    "social_welfare": 1.5420704996999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 38,
+    "agent_7": "GEAAgent",
+    "utility_7": 0.7280091618,
+    "agent_8": "RGAgent",
+    "utility_8": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 12,
+    "agent_9": "GEAAgent",
+    "utility_9": 0.7280091618,
+    "agent_10": "AgentFish",
+    "utility_10": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 68,
+    "agent_11": "GEAAgent",
+    "utility_11": 0.9831526926,
+    "agent_12": "ThirdAgent",
+    "utility_12": 0.6868714833,
+    "nash_product": 0.675299548276551,
+    "social_welfare": 1.6700241759,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 80,
+    "agent_9": "ThirdAgent",
+    "utility_9": 0.7280091618,
+    "agent_10": "Group40Agent04",
+    "utility_10": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1232,
+    "agent_11": "ThirdAgent",
+    "utility_11": 0.4408579361,
+    "agent_12": "Agent007",
+    "utility_12": 0.8213188927,
+    "nash_product": 0.36208495191565937,
+    "social_welfare": 1.2621768288,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 418,
+    "agent_13": "ThirdAgent",
+    "utility_13": 0.5452024871,
+    "agent_14": "DreamTeam109Agent",
+    "utility_14": 0.9968680126,
+    "nash_product": 0.5434949197799541,
+    "social_welfare": 1.5420704996999999,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 80,
+    "agent_15": "ThirdAgent",
+    "utility_15": 0.7280091618,
+    "agent_16": "RGAgent",
+    "utility_16": 0.9366857942,
+    "nash_product": 0.6819158399055093,
+    "social_welfare": 1.664694956,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 1220,
+    "agent_9": "ThirdAgent",
+    "utility_9": 0.8152012466,
+    "agent_10": "AgentFish",
+    "utility_10": 0.7065571637,
+    "nash_product": 0.5759862806424003,
+    "social_welfare": 1.5217584103,
+    "result": "agreement"
+  },
+  {
+    "num_offers": 14,
+    "agent_11": "ThirdAgent",
+    "utility_11": 0.8152012466,
+    "agent_12": "GEAAgent",
+    "utility_12": 0.7065571637,
+    "nash_product": 0.5759862806424003,
+    "social_welfare": 1.5217584103,
+    "result": "agreement"
+  }
+]
