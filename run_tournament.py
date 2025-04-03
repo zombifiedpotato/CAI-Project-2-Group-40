@@ -93,7 +93,7 @@ def agents_vs_anl(agent_num: int):
             "class": "agents.ANL2022.dreamteam109_agent.dreamteam109_agent.DreamTeam109Agent",
         },
         {
-            "class": "agents.ANL2022.LuckyAgent2022.LuckyAgent2022.LuckyAgent2022",
+            "class": "agents.ANL2022.rg_agent.rg_agent.RGAgent",
         },
         {
             "class": "agents.ANL2022.agentfish.agentfish.AgentFish",
@@ -102,7 +102,7 @@ def agents_vs_anl(agent_num: int):
             "class": "agents.ANL2022.gea_agent.gea_agent.GEAAgent",
         },
         {
-            "class": "agents.ANL2022.procrastin_agent.procrastin_agent.ProcrastinAgent",
+            "class": "agents.ANL2022.thirdagent.third_agent.ThirdAgent",
         },
     ]
 
@@ -198,14 +198,14 @@ RESULTS_BASE_DIR = Path("results", time.strftime('%Y%m%d-%H%M%S'))
 RESULTS_BASE_DIR.mkdir(parents=True, exist_ok=True)
 
 tournament_configs = {
-    "our_symmetric": tournament_our_symmetric,
+    # "our_symmetric": tournament_our_symmetric,
     # "our_asymmetric": tournament_our_asymmetric,
     # "vs_baseline_symmetric": tournaments_vs_baseline_symmetric,
     # "vs_baseline_asymmetric": tournaments_vs_baseline_asymmetric,
     # "vs_students_symmetric": tournaments_vs_students_symmetric,
     # "vs_students_asymmetric": tournaments_vs_students_asymmetric,
-    # "vs_anl_symmetric": tournaments_vs_anl_symmetric,
-    # "vs_anl_asymmetric": tournaments_vs_anl_asymmetric,
+    "vs_anl_symmetric": tournaments_vs_anl_symmetric,
+    "vs_anl_asymmetric": tournaments_vs_anl_asymmetric,
 }
 
 def run_and_log_tournament(name, settings):
