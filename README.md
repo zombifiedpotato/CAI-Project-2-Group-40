@@ -1,4 +1,8 @@
-# Automated Negotiation League 2023
+# Group 40 Agents
+Agents from group 40 are contained in agents/group40. The final version of the agent is considered to be Agent05. Agent06 is a prototype which includes ineffective strategies.
+The run_tournament logic has been parrallelised, if an agent does not support accessing storage in parralel make sure to dissable storage for that agent.
+
+## Automated Negotiation League 2023
 Join our [Discord server](https://discord.gg/qvXK3DJTuz)!
 Read the [Call for Participants](docs/Automated_Negotiation_League_2023.pdf)!
 
